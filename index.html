@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Food Payment</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Select Your Food</h1>
+  <div class="food-options">
+    <button onclick="pay('pizza')">🍕 Pizza - $10</button>
+    <button onclick="pay('burger')">🍔 Burger - $8</button>
+    <button onclick="pay('pasta')">🍝 Pasta - $12</button>
+  </div>
+
+  <script>
+    async function pay(food) {
+      const res = await fetch('/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ item: food })
+      });
+      const data = await res.json();
+      window.location.href = data.url;
+    }
+  </script>
+</body>
+</html>
